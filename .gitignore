@@ -1,59 +1,42 @@
-HELP.md
+# Build and distribution
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+build/
+out/
+bin/
+*.class
+*.log
+HELP.md
 
-### STS ###
-.apt_generated
+# Database and local data
+data/
+*.db
+*.mv.db
+*.trace.db
+
+# IDE and Environment settings
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
 .classpath
-.factorypath
 .project
-.settings
+.settings/
+.factorypath
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
+.apt_generated
+.nb-gradle/
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-
-
-# Compiled class files
-target/
-*.class
-
-# Log files
-*.log
-
-# H2 Database files (Crucial: Don't push your local data to GitHub)
-data/
-*.mv.db
-*.trace.db
-
-# Virtual Machine / IDE folders
-.project
-.classpath
-.settings/
-.vscode/
-.idea/
-*.iml
-
-# Maven wrappers and help files
+# Maven wrapper
 .mvn/
 mvnw
 mvnw.cmd
+
+# System files
+.DS_Store
+Thumbs.db
