@@ -18,7 +18,6 @@ public class PatientService {
     }
 
     public List<Patient> getAllPatients() {
-        // Using Java 8 Streams to satisfy your JD requirements
         return patientRepository.findAll().stream()
                 .collect(Collectors.toList());
     }

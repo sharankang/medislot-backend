@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController //Tells Spring this class handles REST API requests
+@RestController
 @RequestMapping("/api/doctors") //Base URL for all endpoints in this class
+@CrossOrigin(origins = "*")
 public class DoctorController {
 
     @Autowired
@@ -25,5 +26,21 @@ public class DoctorController {
     @GetMapping
     public ResponseEntity<List<Doctor>> getAllDoctors() {
         return ResponseEntity.ok(doctorService.getAllDoctors());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody Doctor details) {
+        return ResponseEntity.ok(doctorService.updateDoctor(id, details));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
+        doctorService.deleteDoctor(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Doctor>> search(@RequestParam String spec) {
+        return ResponseEntity.ok(doctorService.searchBySpecialization(spec));
     }
 }

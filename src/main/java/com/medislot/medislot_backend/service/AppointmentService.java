@@ -21,19 +21,28 @@ public class AppointmentService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     public Appointment bookAppointment(Appointment appointment) {
-        //Check if doctor exists
+        // doctor check
         doctorRepository.findById(appointment.getDoctor().getId())
             .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + appointment.getDoctor().getId()));
 
-        //Check if patient exists
+        // patient check
         patientRepository.findById(appointment.getPatient().getId())
             .orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + appointment.getPatient().getId()));
 
+        // set initial status
         appointment.setStatus("BOOKED");
-        return appointmentRepository.save(appointment);
-    }
 
+        // save and trigger the async notification
+        Appointment saved = appointmentRepository.save(appointment);
+        notificationService.sendBookingNotification(saved.getPatient().getName());
+        
+        // return saved object
+        return saved;
+    }
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
@@ -41,5 +50,7 @@ public class AppointmentService {
     public List<Appointment> getAppointmentsByDoctor(Long doctorId) {
         return appointmentRepository.findByDoctorId(doctorId);
     }
+
+    
 }
 
